@@ -12,14 +12,14 @@
 
         <v-navigation-drawer app v-model="isNavDrawerVisible">
             <v-list>
-                <v-list-tile>
-                    <v-list-tile-action>
-                        <v-icon>dashboard</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>Dashboard</v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
+                <v-list-item v-for="link in navDrawerLinks" :key="link.text" router :to="link.route">
+                    <v-list-item-icon>
+                        <v-icon>{{ link.icon }}</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>{{ link.title }}</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
             </v-list>
         </v-navigation-drawer>
     </nav>
@@ -29,7 +29,12 @@
 export default {
     data() {
         return {
-            isNavDrawerVisible: false
+            isNavDrawerVisible: false,
+            navDrawerLinks: [
+                { icon: 'dashboard', title: 'Dashboard', route: '/' },
+                { icon: 'image', title: 'Images', route: '/images' },
+                { icon: 'help', title: 'Help', route: '/about' }
+            ]
         }
     }
     
