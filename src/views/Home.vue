@@ -1,18 +1,34 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <v-img
+      src="https://picsum.photos/350/165?random"
+      height="500"
+      class="grey darken-4"
+    >
+    </v-img>
+
+    <v-file-input 
+      label="image input" 
+      outlined 
+      dense
+    >
+    </v-file-input>
+
+    <v-btn>
+      <span>Upload</span>
+      <v-icon right dark>mdi-cloud-upload</v-icon>
+    </v-btn>
+
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
-  }
+  data: () => ({
+    path: 'not chosen'
+  })
 }
 </script>
