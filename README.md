@@ -1,4 +1,5 @@
-# brimage-ui
+# BRImage-UI
+UI for the BRImage Servlet.
 
 ## Project setup
 ```
