@@ -32,8 +32,8 @@ export default {
             isNavDrawerVisible: false,
             navDrawerLinks: [
                 { icon: 'dashboard', title: 'Dashboard', route: '/' },
-                { icon: 'image', title: 'Images', route: '/images' },
-                { icon: 'help', title: 'Help', route: '/about' }
+                { icon: 'image', title: 'Library', route: '/library' },
+                { icon: 'help', title: 'Help', route: '/help' }
             ]
         }
     }
