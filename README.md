@@ -21,5 +21,11 @@ npm run build
 npm run lint
 ```
 
+### Deploys to S3
+```
+npm run deploy
+```
+Precondition: correctly configured awscli profile for your AWS account
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
