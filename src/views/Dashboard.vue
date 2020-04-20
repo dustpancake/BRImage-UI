@@ -49,7 +49,7 @@ export default {
       this.url=event;
     },
     randomImage() {
-      return "https://picsum.photos/seed/" + (Math.random()*0xFFFFFF<<0).toString(16) + "/350/165";
+      return "https://picsum.photos/seed/" + Math.floor(Math.random()*0xFFFFFF).toString(16) + "/350/165";
     }
   }
 }
