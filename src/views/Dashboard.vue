@@ -25,7 +25,7 @@
       <v-icon right dark>undo</v-icon>
     </v-btn>
 
-    <v-btn class="ml-10">
+    <v-btn class="ml-10" @click="onUpload">
       <span>Upload</span>
       <v-icon right dark>mdi-cloud-upload</v-icon>
     </v-btn>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
   name: 'Home',
@@ -50,6 +51,28 @@ export default {
     },
     randomImage() {
       return "https://picsum.photos/seed/" + Math.floor(Math.random()*0xFFFFFF).toString(16) + "/350/165";
+    },
+    onUpload(event) {
+      console.log(event);
+      console.log(this.url);
+      const options = {
+        crossDomain:true
+      };
+      axios
+        .post('https://dpwsttrm5b.execute-api.eu-west-1.amazonaws.com/Prod/image/fm',
+          {
+            uri:this.url,
+            omega:0.1,
+            phase:0.5
+          },
+          options
+        )
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        })
     }
   }
 }
