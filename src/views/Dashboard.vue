@@ -16,6 +16,7 @@
       prepend-icon="add_a_photo"
       class="mt-4 mx-2"
       @change="onUrlInput"
+      v-model="url"
     >
     </v-text-field >
 
@@ -37,15 +38,18 @@ export default {
   name: 'Home',
   data() {
     return {
-      url: "https://picsum.photos/350/165?random"
+      url: this.randomImage()
     }
   },
   methods: {
     onUndo() {
-      this.url="https://picsum.photos/350/165?random";
+      this.url=this.randomImage()
     },
     onUrlInput(event) {
       this.url=event;
+    },
+    randomImage() {
+      return "https://picsum.photos/seed/" + (Math.random()*0xFFFFFF<<0).toString(16) + "/350/165";
     }
   }
 }
