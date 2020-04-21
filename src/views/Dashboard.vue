@@ -19,9 +19,10 @@
               prepend-icon="add_a_photo"
               class="mt-4 mx-2"
               @change="onUrlInput"
-              v-model="url"
+              v-model="displayUrl"
             >
-            </v-text-field >          
+            </v-text-field >
+            <input type="file" @change="onTest" />     
       </v-col>
       <v-col
         cols="6"
@@ -61,18 +62,25 @@
 </template>
 
 <script>
+/* eslint-disable */
 import axios from 'axios';
 
 export default {
   name: 'Home',
   data() {
     return {
-      url: this.randomImage()
+      url: this.randomImage(),
+      filename: ""
+    }
+  },
+  computed: {
+    displayUrl() {
+      return this.url.startsWith("data") ? this.filename : this.url ;
     }
   },
   methods: {
     onUndo() {
-      this.url=this.randomImage()
+      this.url=this.randomImage();
     },
     onUrlInput(event) {
       this.url=event;
@@ -96,6 +104,16 @@ export default {
         .catch(error => {
           console.log(error);
         })
+    },
+    onTest(event) {
+      const file = event.target.files[0];
+      this.filename = file.name;
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = e => {
+        console.log(e.target.result);
+        this.url = e.target.result;
+      };
     }
   }
 }
