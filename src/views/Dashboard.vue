@@ -1,35 +1,63 @@
 <template>
-  <div class="dashboard">
-
-    <v-img
-      :src="url"
-      height="500"
-      class="grey darken-4"
-    >
-    </v-img>
-
-    <v-text-field 
-      label="image input" 
-      placeholder="URL"
-      outlined 
-      dense
-      prepend-icon="add_a_photo"
-      class="mt-4 mx-2"
-      @change="onUrlInput"
-      v-model="url"
-    >
-    </v-text-field >
-
-    <v-btn class="ml-10" @click="onUndo">
-      <span>Undo</span>
-      <v-icon right dark>undo</v-icon>
-    </v-btn>
-
-    <v-btn class="ml-10" @click="onUpload">
-      <span>Upload</span>
-      <v-icon right dark>mdi-cloud-upload</v-icon>
-    </v-btn>
-  </div>
+  <v-container>
+    <v-row>
+      <v-col
+        cols="12"
+        md="8"
+      >
+          <v-img
+            :src="url"
+            height="500"
+            class="grey darken-4"
+          >
+          </v-img>
+            <v-text-field 
+              label="image input" 
+              placeholder="URL"
+              outlined 
+              dense
+              prepend-icon="add_a_photo"
+              class="mt-4 mx-2"
+              @change="onUrlInput"
+              v-model="url"
+            >
+            </v-text-field >          
+      </v-col>
+      <v-col
+        cols="6"
+        md="4"
+      >
+        <v-text-field class="pt-2"
+            label="Omega"
+            placeholder="0.001"
+            outlined
+        ></v-text-field>    
+        <v-text-field
+            label="Phase"
+            placeholder="0.005"
+            outlined
+        ></v-text-field> 
+        <v-text-field
+            label="Lowpass"
+            placeholder="1.00"
+            outlined
+        ></v-text-field> 
+        <v-text-field
+            label="pQuantize"
+            placeholder="0.001"
+            outlined
+        ></v-text-field> 
+        <v-btn class="mx-1" @click="onUndo">
+          <span>Random</span>
+          <v-icon right dark>autorenew</v-icon>
+        </v-btn>
+        <v-btn class="mx-1" @click="onUpload">
+          <span>Process</span>
+          <v-icon right dark>mdi-cloud-upload</v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
