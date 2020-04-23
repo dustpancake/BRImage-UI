@@ -111,8 +111,24 @@ export default {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = e => {
-        console.log(e.target.result);
+        //console.log(e.target.result);
         this.url = e.target.result;
+        axios
+          .get(`https://dpwsttrm5b.execute-api.eu-west-1.amazonaws.com/Prod/image/upload/uri/${this.filename}`)
+          .then(response => {
+            console.log(response.data);
+            console.log(response.data.uri);
+            const options = {
+              headers: {
+                'Content-Type': file.type
+              }
+            };
+            return axios
+                    .put(response.data.uri,file,options);
+          })
+          .catch(error => {
+            console.log(error);
+          })
       };
     }
   }
