@@ -94,12 +94,13 @@ export default {
         .post('https://dpwsttrm5b.execute-api.eu-west-1.amazonaws.com/Prod/image/fm',
           {
             uri:this.url,
-            omega:0.1,
-            phase:0.5
           }
         )
         .then(response => {
           console.log(response);
+          setTimeout(() => {
+            this.url = response.data;
+          }, 2000);       
         })
         .catch(error => {
           console.log(error);
@@ -111,10 +112,16 @@ export default {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = e => {
-        //console.log(e.target.result);
         this.url = e.target.result;
         axios
-          .get(`https://dpwsttrm5b.execute-api.eu-west-1.amazonaws.com/Prod/image/upload/uri/${this.filename}`)
+          //.get(`https://dpwsttrm5b.execute-api.eu-west-1.amazonaws.com/Prod/image/upload/uri?type=image%2Fjpeg&filename=michael%2Ejpg`)
+          .get('https://dpwsttrm5b.execute-api.eu-west-1.amazonaws.com/Prod/image/upload/uri',{
+              params: {
+                type: file.type,
+                filename: file.name
+              }
+            }
+          )
           .then(response => {
             console.log(response.data);
             console.log(response.data.uri);
@@ -124,7 +131,24 @@ export default {
               }
             };
             return axios
-                    .put(response.data.uri,file,options);
+              .put(response.data.uri,file,options)
+              .then(result => {
+                return response.data.uri.split("?")[0];
+              })
+          })
+          .then(uri => {
+            return axios
+              .post('https://dpwsttrm5b.execute-api.eu-west-1.amazonaws.com/Prod/image/fm',
+                {
+                  uri:uri,
+                }
+              )
+              .then(ans => {
+                console.log(ans);
+                setTimeout(() => {
+                  this.url = ans.data;
+                }, 2000);       
+              });
           })
           .catch(error => {
             console.log(error);
