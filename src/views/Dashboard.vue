@@ -13,8 +13,8 @@
           >
           </v-img>
           <v-text-field 
-            label="image input" 
-            placeholder="Type to enter your URL"
+            label="http input" 
+            placeholder="Paste your URL (http or https)"
             outlined 
             dense
             prepend-icon="add_a_photo"
@@ -86,6 +86,7 @@
 /* eslint-disable */
 const rest = require('../utils/rest');
 const image = require('../utils/image');
+const check = require('../utils/check');
 
 export default {
   name: 'Dashboard',
@@ -136,13 +137,14 @@ export default {
     },
     onUrl(url) {
       console.log(`onUrl=${this.url}`);
-      if(this.url.startsWith('http')) {
+      if(check.checkUrl(url)) {
+        console.log("here");
         this.img = this.url;
       }
     },
     onUrlRules(input) {
       console.log(input);
-      return true;
+      return check.checkUrl(input);
     },
     retryFmUri(uri,cnt) {
       console.log(`retries=${cnt}`);
