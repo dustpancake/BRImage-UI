@@ -101,7 +101,8 @@ export default {
       this.img = image.getRandom();
     },
     onProcess() {
-      rest.postUriToFm(this.img, this.getParams());
+      //rest.postUriToFm(this.img, this.getParams());
+      rest.test("https://brimage-bucket.s3-eu-west-1.amazonaws.com/glitches/4EkJE4DXbtCoul9TMoSZAQ.jpg");
     },
     getParams() {
       return {

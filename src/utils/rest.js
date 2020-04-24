@@ -2,6 +2,15 @@
 
 const axios = require('axios');
 
+function headCheck(uri) {
+    console.log(uri);
+    axios
+        .get(uri)
+        .then(response => {
+            console.log(response);
+        });
+}
+
 module.exports = {
     // triggers transformation and waits for result
     postImageFm: () => {
@@ -11,6 +20,20 @@ module.exports = {
     postUriToFm: (uri,params) => {
         console.log(uri);
         console.log(params);
+        axios
+            .post('https://dpwsttrm5b.execute-api.eu-west-1.amazonaws.com/Prod/image/fm',
+                {
+                    uri: uri,
+                    omega: params.omega,
+                    phase: params.phase,
+                    lowpass: params.lowpass,
+                    pquantize: params.pquantize
+                }
+            )
+            .then(response => {
+                console.log(response);
+                headCheck(response.data);
+            })
     },
 
     //stores local image in S3
@@ -29,5 +52,10 @@ module.exports = {
                 });
                 return fm;
             });
+    },
+
+    test: param => {
+        console.log(`test got: ${param}`);
+        headCheck(param);
     }
 };
