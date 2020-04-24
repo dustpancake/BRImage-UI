@@ -136,7 +136,7 @@ export default {
             .catch(err => {
               console.log(`retryFrmUri error=${err}`);
             })
-        }, 500);
+        }, 1000);
       }
     },
     getParams() {
