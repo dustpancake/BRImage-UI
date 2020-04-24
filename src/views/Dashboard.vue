@@ -30,6 +30,7 @@
             outlined
             dense
             class="mx-2"
+            accept="image/*"
             v-model="file"
             @change="onFile"
           >
@@ -106,6 +107,8 @@ export default {
 
   methods: {
     onRandom() {
+      this.url = undefined;
+      this.file = undefined;
       this.img = image.getRandom();
     },
     onProcess() {
@@ -137,13 +140,12 @@ export default {
     },
     onUrl(url) {
       console.log(`onUrl=${this.url}`);
-      if(check.checkUrl(url)) {
+      if(url && check.checkUrl(url)) {
         console.log("here");
         this.img = this.url;
       }
     },
     onUrlRules(input) {
-      console.log(input);
       return check.checkUrl(input);
     },
     retryFmUri(uri,cnt) {
