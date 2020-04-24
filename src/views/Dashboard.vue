@@ -105,10 +105,10 @@ export default {
     },
     getParams() {
       return {
-        omega: this.omega,
-        phase: this.phase,
-        lowpass: this.lowpass,
-        pquantize: this.pquantize
+        omega: this.omega ? parseFloat(this.omega) : this.fmParams.omega.default,
+        phase: this.phase ? parseFloat(this.phase) : this.fmParams.phase.default,
+        lowpass: this.lowpass ? parseFloat(this.lowpass) : this.fmParams.lowpass.default,
+        pquantize: this.pquantize ? parseFloat(this.pquantize) : this.fmParams.pquantize.default
       };
     }
   },
