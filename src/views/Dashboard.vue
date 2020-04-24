@@ -21,6 +21,7 @@
             class="mt-4 mx-2"
             v-model="url"
             @change="onUrl"
+            :rules="[onUrlRules]"
           >
           </v-text-field >
           <v-file-input
@@ -125,19 +126,23 @@ export default {
       }
     },
     onFile(files) {
-      //put into image.js as future
       console.log(`onFile=${this.file}`);
-      const reader = new FileReader();
-      reader.onload = e => {
-        this.img = e.target.result;
-      };
-      reader.readAsDataURL(this.file);
+      if(this.file) {
+        image.readLocalImage(this.file)
+          .then(image => {
+            this.img = image;
+          }); 
+      }
     },
     onUrl(url) {
       console.log(`onUrl=${this.url}`);
       if(this.url.startsWith('http')) {
         this.img = this.url;
       }
+    },
+    onUrlRules(input) {
+      console.log(input);
+      return true;
     },
     retryFmUri(uri,cnt) {
       console.log(`retries=${cnt}`);
