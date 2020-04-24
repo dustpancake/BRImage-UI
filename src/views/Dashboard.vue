@@ -120,7 +120,7 @@ export default {
     },
     retryFmUri(uri,cnt) {
       console.log(`retries=${cnt}`);
-      if(cnt <= 10) {
+      if(cnt <= 20) {
         setTimeout(() => {
           rest.isFmReady(uri)
             .then(ret => {
@@ -136,7 +136,7 @@ export default {
             .catch(err => {
               console.log(`retryFrmUri error=${err}`);
             })
-        }, 1000);
+        }, 500);
       }
     },
     getParams() {
