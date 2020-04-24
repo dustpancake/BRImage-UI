@@ -101,8 +101,43 @@ export default {
       this.img = image.getRandom();
     },
     onProcess() {
-      //rest.postUriToFm(this.img, this.getParams());
-      rest.test("https://brimage-bucket.s3-eu-west-1.amazonaws.com/glitches/4EkJE4DXbtCoul9TMoSZAQ.jpg");
+      rest.postUriToFm(this.img, this.getParams())
+        .then(res => {
+          console.log(`onProcess: ${res.len}`);
+          if(res.len > 0) {
+            this.img = res.uri
+          }
+          else {
+            this.retryFmUri(res.uri,1);
+          }
+        })
+        .catch(err => {
+          console.log(`onProcess: ${err}`);
+        });
+      //rest.test("https://brimage-bucket.s3-eu-west-1.amazonaws.com/glitches/4EkJE4DXbtCoul9TMoSZAQ.jpg");
+      //rest.test("https://www.newstatesman.com/sites/default/files/styles/lead_image/public/Longreads_2019/09/2019_39_patti_smith.jpg?itok=lBw3de4S");
+      //rest.test("http://www.stjamestaunton.co.uk/");
+    },
+    retryFmUri(uri,cnt) {
+      console.log(`retries=${cnt}`);
+      if(cnt <= 10) {
+        setTimeout(() => {
+          rest.isFmReady(uri)
+            .then(ret => {
+              console.log(`onProcessRetry: ${ret.len}`);
+              if(ret.len > 0) {
+                this.img = ret.uri;
+              }
+              else {
+                console.log('Retry still not ready');
+                this.retryFmUri(uri,cnt+1);
+              }
+            })
+            .catch(err => {
+              console.log(`retryFrmUri error=${err}`);
+            })
+        }, 500);
+      }
     },
     getParams() {
       return {

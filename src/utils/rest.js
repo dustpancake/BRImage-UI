@@ -3,11 +3,15 @@
 const axios = require('axios');
 
 function headCheck(uri) {
-    console.log(uri);
-    axios
-        .get(uri)
+    console.log(`headcheck: ${uri}`);
+    return axios
+        .head(uri)
         .then(response => {
             console.log(response);
+            return {
+                len: response.headers['content-length'],
+                uri: uri
+            };
         });
 }
 
@@ -17,11 +21,7 @@ module.exports = {
 
     },
 
-    postUriToFm: (uri,params) => {
-        console.log(uri);
-        console.log(params);
-        axios
-            .post('https://dpwsttrm5b.execute-api.eu-west-1.amazonaws.com/Prod/image/fm',
+    /*
                 {
                     uri: uri,
                     omega: params.omega,
@@ -29,10 +29,19 @@ module.exports = {
                     lowpass: params.lowpass,
                     pquantize: params.pquantize
                 }
+    */
+    postUriToFm: (uri,params) => {
+        console.log(uri);
+        console.log(params);
+        return axios
+            .post('https://dpwsttrm5b.execute-api.eu-west-1.amazonaws.com/Prod/image/fm',
+                {
+                    uri: uri
+                }
             )
             .then(response => {
                 console.log(response);
-                headCheck(response.data);
+                return headCheck(response.data);
             })
     },
 
@@ -54,8 +63,15 @@ module.exports = {
             });
     },
 
+    isFmReady: (uri) => {
+        return headCheck(uri);
+    },
+
     test: param => {
         console.log(`test got: ${param}`);
-        headCheck(param);
+        headCheck(param)
+            .then(content => {
+                console.log(content);
+            });
     }
 };
