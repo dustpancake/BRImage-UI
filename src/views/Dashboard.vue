@@ -40,30 +40,34 @@
             :placeholder="fmParams ? fmParams.omega.default.toString() : ''"
             outlined
             :hint="fmParams ? fmParams.omega.help : ''"
+            v-model="omega"
         ></v-text-field>    
         <v-text-field
             :label="fmParams ? fmParams.phase.name : ''"
             :placeholder="fmParams ? fmParams.phase.default.toString() : ''"
             outlined
             :hint="fmParams ? fmParams.phase.help : ''"
+            v-model="phase"
         ></v-text-field> 
         <v-text-field
             :label="fmParams ? fmParams.lowpass.name : ''"
             :placeholder="fmParams ? fmParams.lowpass.default.toString() : ''"
             outlined
             :hint="fmParams ? fmParams.lowpass.help : ''"
+            v-model="lowpass"
         ></v-text-field> 
         <v-text-field
             :label="fmParams ? fmParams.pquantize.name : ''"
             :placeholder="fmParams ? fmParams.pquantize.default.toString() : ''"
             outlined
             :hint="fmParams ? fmParams.pquantize.help : ''"
+            v-model="pquantize"
         ></v-text-field> 
         <v-btn class="mx-1" @click="onRandom">
           <span>Random</span>
           <v-icon right dark>autorenew</v-icon>
         </v-btn>
-        <v-btn class="mx-1">
+        <v-btn class="mx-1" @click="onProcess">
           <span>Process</span>
           <v-icon right dark>mdi-cloud-upload</v-icon>
         </v-btn>
@@ -84,7 +88,10 @@ export default {
   data() {
     return {
       img: image.getRandom(),
-      omega: "0.001",
+      omega: undefined,
+      phase: undefined,
+      lowpass: undefined,
+      pquantize: undefined,
       fmParams: undefined
     }
   },
@@ -92,6 +99,17 @@ export default {
   methods: {
     onRandom() {
       this.img = image.getRandom();
+    },
+    onProcess() {
+      rest.postUriToFm(this.img, this.getParams());
+    },
+    getParams() {
+      return {
+        omega: this.omega,
+        phase: this.phase,
+        lowpass: this.lowpass,
+        pquantize: this.pquantize
+      };
     }
   },
 
@@ -99,7 +117,6 @@ export default {
     rest.getFmParams()
       .then(params => {
         this.fmParams = params;
-        console.log(this.fmParams);
       });
   }
 

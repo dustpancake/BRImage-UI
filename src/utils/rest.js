@@ -8,6 +8,11 @@ module.exports = {
 
     },
 
+    postUriToFm: (uri,params) => {
+        console.log(uri);
+        console.log(params);
+    },
+
     //stores local image in S3
     putImageStore: () => {
 
