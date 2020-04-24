@@ -141,10 +141,10 @@ export default {
     },
     getParams() {
       return {
-        omega: this.omega ? parseFloat(this.omega) : this.fmParams.omega.default,
-        phase: this.phase ? parseFloat(this.phase) : this.fmParams.phase.default,
-        lowpass: this.lowpass ? parseFloat(this.lowpass) : this.fmParams.lowpass.default,
-        pquantize: this.pquantize ? parseFloat(this.pquantize) : this.fmParams.pquantize.default
+        omega: this.omega ? this.omega : this.fmParams.omega.default.toString(),
+        phase: this.phase ? this.phase : this.fmParams.phase.default.toString(),
+        lowpass: this.lowpass ? this.lowpass : this.fmParams.lowpass.default.toString(),
+        pquantize: this.pquantize ? this.pquantize : this.fmParams.pquantize.default.toString()
       };
     }
   },

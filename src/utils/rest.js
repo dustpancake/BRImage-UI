@@ -36,7 +36,11 @@ module.exports = {
         return axios
             .post('https://dpwsttrm5b.execute-api.eu-west-1.amazonaws.com/Prod/image/fm',
                 {
-                    uri: uri
+                    uri: uri,
+                    omega: params.omega,
+                    phase: params.phase,
+                    lowpass: params.lowpass,
+                    pquantize: params.pquantize
                 }
             )
             .then(response => {
