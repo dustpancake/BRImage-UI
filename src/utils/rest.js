@@ -21,18 +21,8 @@ module.exports = {
 
     },
 
-    /*
-                {
-                    uri: uri,
-                    omega: params.omega,
-                    phase: params.phase,
-                    lowpass: params.lowpass,
-                    pquantize: params.pquantize
-                }
-    */
     postUriToFm: (uri,params) => {
-        console.log(uri);
-        console.log(params);
+        console.log(`postUriToFm() uri=${uri}; params=${params}`);
         return axios
             .post('https://dpwsttrm5b.execute-api.eu-west-1.amazonaws.com/Prod/image/fm',
                 {
@@ -50,8 +40,29 @@ module.exports = {
     },
 
     //stores local image in S3
-    putImageStore: () => {
-
+    putImageStore: (file) => {
+        return axios
+          .get('https://dpwsttrm5b.execute-api.eu-west-1.amazonaws.com/Prod/image/upload/uri',{
+              params: {
+                type: file.type,
+                filename: file.name
+              }
+            }
+          )
+          .then(response => {
+            console.log(response.data);
+            console.log(response.data.uri);
+            const options = {
+              headers: {
+                'Content-Type': file.type
+              }
+            };
+            return axios
+              .put(response.data.uri,file,options)
+              .then(result => {
+                return response.data.uri.split("?")[0];
+              })
+          })
     },
 
     getFmParams: () => {

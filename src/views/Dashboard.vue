@@ -19,6 +19,8 @@
             dense
             prepend-icon="add_a_photo"
             class="mt-4 mx-2"
+            v-model="url"
+            @change="onUrl"
           >
           </v-text-field >
           <v-file-input
@@ -27,6 +29,8 @@
             outlined
             dense
             class="mx-2"
+            v-model="file"
+            @change="onFile"
           >
           </v-file-input>
       </v-col>
@@ -88,6 +92,8 @@ export default {
   data() {
     return {
       img: image.getRandom(),
+      url: undefined,
+      file: undefined,
       omega: undefined,
       phase: undefined,
       lowpass: undefined,
@@ -101,22 +107,37 @@ export default {
       this.img = image.getRandom();
     },
     onProcess() {
-      rest.postUriToFm(this.img, this.getParams())
-        .then(res => {
-          console.log(`onProcess: ${res.len}`);
-          if(res.len > 0) {
-            this.img = res.uri
-          }
-          else {
-            this.retryFmUri(res.uri,1);
-          }
-        })
-        .catch(err => {
-          console.log(`onProcess: ${err}`);
-        });
-      //rest.test("https://brimage-bucket.s3-eu-west-1.amazonaws.com/glitches/4EkJE4DXbtCoul9TMoSZAQ.jpg");
-      //rest.test("https://www.newstatesman.com/sites/default/files/styles/lead_image/public/Longreads_2019/09/2019_39_patti_smith.jpg?itok=lBw3de4S");
-      //rest.test("http://www.stjamestaunton.co.uk/");
+      if(this.img) {
+        if(this.img.startsWith('data:')) {
+          console.log('data');
+          rest.putImageStore(this.file)
+            .then(url => {
+              return this.doPostFm(url);
+            })
+            .catch(err => {
+              console.log(`onProcess file error=${err}`);
+            });
+        }
+        else {
+          console.log('url');
+          this.doPostFm(this.img);
+        }
+      }
+    },
+    onFile(files) {
+      //put into image.js as future
+      console.log(`onFile=${this.file}`);
+      const reader = new FileReader();
+      reader.onload = e => {
+        this.img = e.target.result;
+      };
+      reader.readAsDataURL(this.file);
+    },
+    onUrl(url) {
+      console.log(`onUrl=${this.url}`);
+      if(this.url.startsWith('http')) {
+        this.img = this.url;
+      }
     },
     retryFmUri(uri,cnt) {
       console.log(`retries=${cnt}`);
@@ -138,6 +159,21 @@ export default {
             })
         }, 500);
       }
+    },
+    doPostFm(uri) {
+      rest.postUriToFm(uri, this.getParams())
+        .then(res => {
+          console.log(`doPostFm: ${res.len}`);
+          if(res.len > 0) {
+            this.img = res.uri
+          }
+          else {
+            this.retryFmUri(res.uri,1);
+          }
+        })
+        .catch(err => {
+          console.log(`doPostFm: ${err}`);
+        });
     },
     getParams() {
       return {
