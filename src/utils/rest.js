@@ -2,6 +2,18 @@
 
 const axios = require('axios');
 
+function needsFirefoxFix(headers) {
+    return headers['content-length'] == undefined;
+}
+
+function getContentLength(headers) {
+    if(needsFirefoxFix(headers)) {
+        console.log('applying firefox fix');
+        return headers['content-type'] && headers['content-type'].startsWith('image/') ? 1000 : 0;
+    }
+    return headers['content-length'];
+}
+
 function headCheck(uri) {
     console.log(`headcheck: ${uri}`);
     return axios
@@ -9,7 +21,7 @@ function headCheck(uri) {
         .then(response => {
             console.log(response);
             return {
-                len: response.headers['content-length'],
+                len: getContentLength(response.headers),
                 uri: uri
             };
         });
