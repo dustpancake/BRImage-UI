@@ -13,8 +13,8 @@
           >
           </v-img>
           <v-text-field 
-            label="http input" 
-            placeholder="Paste your URL (http or https)"
+            label="http image input" 
+            placeholder="Paste your http or https address"
             outlined 
             dense
             prepend-icon="add_a_photo"
@@ -25,8 +25,8 @@
           >
           </v-text-field >
           <v-file-input
-            label="file input"
-            placeholder="Click to select your Image"
+            label="file image input"
+            placeholder="Click to select your own image"
             outlined
             dense
             class="mx-2"
@@ -47,6 +47,9 @@
             outlined
             :hint="fmParams ? fmParams.omega.help : ''"
             v-model="omega"
+            :rules="[onOmegaRules]"
+            validate-on-blur
+            maxlength="5"
         ></v-text-field>    
         <v-text-field
             :label="fmParams ? fmParams.phase.name : ''"
@@ -54,6 +57,9 @@
             outlined
             :hint="fmParams ? fmParams.phase.help : ''"
             v-model="phase"
+            :rules="[onPhaseRules]"
+            validate-on-blur
+            maxlength="5"
         ></v-text-field> 
         <v-text-field
             :label="fmParams ? fmParams.lowpass.name : ''"
@@ -61,6 +67,9 @@
             outlined
             :hint="fmParams ? fmParams.lowpass.help : ''"
             v-model="lowpass"
+            :rules="[onLowpassRules]"
+            validate-on-blur
+            maxlength="5"
         ></v-text-field> 
         <v-text-field
             :label="fmParams ? fmParams.pquantize.name : ''"
@@ -68,6 +77,9 @@
             outlined
             :hint="fmParams ? fmParams.pquantize.help : ''"
             v-model="pquantize"
+            :rules="[onPquantizeRules]"
+            validate-on-blur
+            maxlength="1"
         ></v-text-field> 
         <v-btn class="mx-1" @click="onRandom">
           <span>Random</span>
@@ -147,6 +159,34 @@ export default {
     },
     onUrlRules(input) {
       return check.checkUrl(input);
+    },
+    onOmegaRules(input) {
+      console.log(input);
+      if(this.fmParams){
+        return check.checkOmega(input,this.fmParams.omega);
+      }
+      return true;
+    },
+    onPhaseRules(input) {
+      console.log(input);
+      if(this.fmParams){
+        return check.checkPhase(input,this.fmParams.phase);
+      }
+      return true;
+    },
+    onLowpassRules(input) {
+      console.log(input);
+      if(this.fmParams){
+        return check.checkLowpass(input,this.fmParams.lowpass);
+      }
+      return true;
+    },
+    onPquantizeRules(input) {
+      console.log(input);
+      if(this.fmParams){
+        return check.checkPquantize(input,this.fmParams.pquantize);
+      }
+      return true;
     },
     retryFmUri(uri,cnt) {
       console.log(`retries=${cnt}`);

@@ -1,4 +1,4 @@
-/*disable lint*/
+/*eslint-disable*/
 const validator = require('validator');
 module.exports = {
 
@@ -21,5 +21,61 @@ module.exports = {
         else {
             return true;
         }
+    },
+
+    checkOmega: (value,params) => {
+        console.log(JSON.stringify(params));
+        if(value) {
+            return validator.isFloat(value,{
+                gt: Number(params.min.slice(1)),
+                max: Number(params.max)
+            }) && validator.isLength(value, {
+                min: 0,
+                max: params.step.toString().length
+            });
+        }
+        return true;
+    },
+
+    checkPhase: (value,params) => {
+        console.log(JSON.stringify(params));
+        if(value) {
+            return validator.isFloat(value,{
+                gt: Number(params.min.slice(1)),
+                max: Number(params.max)
+            }) && validator.isLength(value, {
+                min: 0,
+                max: params.step.toString().length
+            });
+        }
+        return true;
+    },
+
+    checkLowpass: (value,params) => {
+        console.log(JSON.stringify(params));
+        if(value) {
+            return validator.isFloat(value,{
+                min: Number(params.min),
+                lt: Number(params.max.slice(1))
+            }) && validator.isLength(value, {
+                min: 0,
+                max: params.step.toString().length
+            });
+        }
+        return true;
+    },
+
+    checkPquantize: (value,params) => {
+        console.log(JSON.stringify(params));
+        if(value) {
+            return validator.isFloat(value,{
+                min: Number(params.min),
+                lt: Number(params.max.slice(1))
+            }) && validator.isLength(value, {
+                min: 0,
+                max: params.step.toString().length
+            });
+        }
+        return true;
     }
 }
