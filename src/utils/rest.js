@@ -94,6 +94,23 @@ module.exports = {
         return headCheck(uri);
     },
 
+    saveImg: (uri, filename) => {
+        axios({
+            method: 'get',
+            url: uri,
+            responseType: 'blob'
+          }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', filename);
+            document.body.appendChild(link);
+            link.click();
+          }).catch(err => {
+              console.log(`saveImg() : err=${err}`);
+          });
+    },
+
     test: param => {
         console.log(`test got: ${param}`);
         headCheck(param)

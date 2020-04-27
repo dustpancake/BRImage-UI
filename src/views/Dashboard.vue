@@ -81,14 +81,18 @@
             validate-on-blur
             maxlength="1"
         ></v-text-field> 
-        <v-btn class="mx-1" @click="onRandom">
+        <v-btn class="mx-1 mt-1" @click="onRandom">
           <span>Random</span>
           <v-icon right dark>autorenew</v-icon>
         </v-btn>
-        <v-btn class="mx-1" @click="onProcess">
+        <v-btn class="mx-1 mt-1" @click="onProcess">
           <span>Process</span>
           <v-icon right dark>mdi-cloud-upload</v-icon>
         </v-btn>
+        <v-btn class="mx-1 mt-1" @click="onSave">
+          <span>Save</span>
+          <v-icon right dark>mdi-cloud-download</v-icon>
+        </v-btn>        
       </v-col>
 
     </v-row>
@@ -100,6 +104,8 @@
 const rest = require('../utils/rest');
 const image = require('../utils/image');
 const check = require('../utils/check');
+
+const URI = require('urijs');
 
 export default {
   name: 'Dashboard',
@@ -156,6 +162,12 @@ export default {
         console.log("here");
         this.img = this.url;
       }
+    },
+    onSave() {
+      console.log(`onSave=${this.img}`);
+      const url = new URI(this.img);
+      //rest.saveImg('https://brimage-bucket.s3-eu-west-1.amazonaws.com/glitches/0Pq0Z5Z1uXsXe2ZosfJA.jpg');
+      rest.saveImg(this.img,url.filename());
     },
     onUrlRules(input) {
       return check.checkUrl(input);
