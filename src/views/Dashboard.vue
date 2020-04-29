@@ -133,13 +133,16 @@ export default {
       if(this.img) {
         if(this.img.startsWith('data:')) {
           console.log('data');
-          rest.putImageStore(this.file)
-            .then(url => {
-              return this.doPostFm(url);
-            })
-            .catch(err => {
-              console.log(`onProcess file error=${err}`);
-            });
+          image.compressFile(this.file)
+          .then(compressedFile => {
+            return rest.putImageStore(compressedFile);
+          })
+          .then(url => {
+            return this.doPostFm(url);
+          })
+          .catch(err => {
+            console.log(`onProcess file error=${err}`);
+          });
         }
         else {
           console.log('url');
