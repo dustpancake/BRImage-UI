@@ -1,6 +1,6 @@
 <template>
     <nav>        
-        <v-app-bar app flat>
+        <v-app-bar app text>
             <v-app-bar-nav-icon class="grey--text" @click="isNavDrawerVisible = !isNavDrawerVisible">
             </v-app-bar-nav-icon>
 
