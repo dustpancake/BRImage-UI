@@ -34,7 +34,7 @@
             v-model="file"
             @change="onFile"
           >
-          </v-file-input>
+          </v-file-input> 
       </v-col>
 
       <v-col
@@ -92,7 +92,7 @@
         <v-btn class="mx-1 mt-1" @click="onSave">
           <span>Save</span>
           <v-icon right dark>mdi-cloud-download</v-icon>
-        </v-btn>        
+        </v-btn>    
       </v-col>
 
     </v-row>

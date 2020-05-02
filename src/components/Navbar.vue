@@ -8,6 +8,15 @@
                 <span>BR</span>
                 <span class="font-weight-light">image</span>
             </v-toolbar-title>
+
+            <v-spacer></v-spacer>
+
+            <v-btn icon @click="onGit">
+                <v-icon>mdi-github</v-icon>
+            </v-btn>
+            <v-btn icon @click="onInstagram">
+                <v-icon>mdi-instagram</v-icon>
+            </v-btn>
         </v-app-bar>
 
         <v-navigation-drawer app v-model="isNavDrawerVisible">
@@ -35,6 +44,16 @@ export default {
                 { icon: 'image', title: 'Library', route: '/library' },
                 { icon: 'help', title: 'Help', route: '/help' }
             ]
+        }
+    },
+
+    methods: {
+        onGit() {
+            window.open("https://github.com/Dustpancake/BRImage", "_blank");
+        },
+
+        onInstagram() {
+            window.open("https://www.instagram.com/dustpancake/", "_blank");
         }
     }
     
