@@ -173,8 +173,9 @@ export default {
     onSave() {
       console.log(`onSave=${this.img}`);
       const url = new URI(this.img);
+      window.open(url, "_blank");
       //rest.saveImg('https://brimage-bucket.s3-eu-west-1.amazonaws.com/glitches/0Pq0Z5Z1uXsXe2ZosfJA.jpg');
-      rest.saveImg(this.img,url.filename());
+      //rest.saveImg(this.img,url.filename());
       this.track('onSave');
     },
     onUrlRules(input) {
