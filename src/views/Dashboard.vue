@@ -128,6 +128,7 @@ export default {
       this.url = undefined;
       this.file = undefined;
       this.img = image.getRandom();
+      this.track('onRandom');
     },
     onProcess() {
       if(this.img) {
@@ -149,6 +150,7 @@ export default {
           this.doPostFm(this.img);
         }
       }
+      this.track('onProcess');
     },
     onFile(files) {
       console.log(`onFile=${this.file}`);
@@ -158,6 +160,7 @@ export default {
             this.img = image;
           }); 
       }
+      this.track('onFile');
     },
     onUrl(url) {
       console.log(`onUrl=${this.url}`);
@@ -165,12 +168,14 @@ export default {
         console.log("here");
         this.img = this.url;
       }
+      this.track('onUrl');
     },
     onSave() {
       console.log(`onSave=${this.img}`);
       const url = new URI(this.img);
       //rest.saveImg('https://brimage-bucket.s3-eu-west-1.amazonaws.com/glitches/0Pq0Z5Z1uXsXe2ZosfJA.jpg');
       rest.saveImg(this.img,url.filename());
+      this.track('onSave');
     },
     onUrlRules(input) {
       return check.checkUrl(input);
@@ -178,6 +183,7 @@ export default {
     onOmegaRules(input) {
       console.log(input);
       if(this.fmParams){
+        this.track('onOmega');
         return check.checkOmega(input,this.fmParams.omega);
       }
       return true;
@@ -185,6 +191,7 @@ export default {
     onPhaseRules(input) {
       console.log(input);
       if(this.fmParams){
+        this.track('onPhase');
         return check.checkPhase(input,this.fmParams.phase);
       }
       return true;
@@ -192,6 +199,7 @@ export default {
     onLowpassRules(input) {
       console.log(input);
       if(this.fmParams){
+        this.track('onLowpass');
         return check.checkLowpass(input,this.fmParams.lowpass);
       }
       return true;
@@ -199,6 +207,7 @@ export default {
     onPquantizeRules(input) {
       console.log(input);
       if(this.fmParams){
+        this.track('onPquantize');
         return check.checkPquantize(input,this.fmParams.pquantize);
       }
       return true;
@@ -212,6 +221,7 @@ export default {
               console.log(`onProcessRetry: ${ret.len}`);
               if(ret.len > 0) {
                 this.img = ret.uri;
+                this.time(cnt);
               }
               else {
                 console.log('Retry still not ready');
@@ -219,9 +229,13 @@ export default {
               }
             })
             .catch(err => {
-              console.log(`retryFrmUri error=${err}`);
+              console.log(`retryFmUri error=${err}`);
             })
         }, 500);
+      }
+      else {
+        console.log('retryFmUri - giving up');
+        this.time(cnt);
       }
     },
     doPostFm(uri) {
@@ -246,6 +260,20 @@ export default {
         lowpass: this.lowpass && check.checkLowpass(this.lowpass,this.fmParams.lowpass) ? this.lowpass : this.fmParams.lowpass.default.toString(),
         pquantize: this.pquantize && check.checkPquantize(this.pquantize,this.fmParams.pquantize) ? this.pquantize : this.fmParams.pquantize.default.toString()
       };
+    },
+    track(label) {
+        this.$gtag.event('select_content', {
+          'event_category': 'engagement',
+          'event_label': label,
+          'value': 1
+        });
+    },
+    time(count) {
+      this.$gtag.time({
+        'name' : 'loadFM',
+        'value' : (count * 500),
+        'event_category' : 'backend_process'
+      })
     }
   },
 
