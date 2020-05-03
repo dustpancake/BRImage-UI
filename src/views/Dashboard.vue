@@ -1,47 +1,64 @@
 <template>
   <v-container>
-    <v-row>
-
-      <v-col
-        cols="12"
-        md="8"
+    <v-row justify="center" class="ma-2">
+      <v-btn
+        icon
       >
-          <v-img
-            :src="img"
-            height="500"
-            class="grey darken-4"
-          >
-          </v-img>
-          <v-text-field 
-            label="http image input" 
-            placeholder="Paste your http or https address"
-            outlined 
-            dense
-            prepend-icon="add_a_photo"
-            class="mt-4 mx-2"
-            v-model="url"
-            @change="onUrl"
-            :rules="[onUrlRules]"
-          >
-          </v-text-field >
-          <v-file-input
-            label="file image input"
-            placeholder="Click to select your own image"
-            outlined
-            dense
-            class="mx-2"
-            accept="image/*"
-            v-model="file"
-            @change="onFile"
-          >
-          </v-file-input> 
-      </v-col>
+        <v-icon>mdi-record</v-icon>
+      </v-btn>
 
-      <v-col
-        cols="6"
-        md="4"
+      <v-btn
+        icon
       >
-        <v-text-field class="pt-2"
+        <v-icon>mdi-record</v-icon>
+      </v-btn>
+    </v-row>
+
+    <v-row justify="center">
+
+      <v-img
+        :src="img"
+        max-width="500"
+        max-height="500"
+        class="grey darken-4"
+      >
+      </v-img>
+
+      <v-btn
+        v-show=true
+        fab
+        absolute
+        right
+      >
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+
+    </v-row>
+
+    <v-row justify="center" class="ma-4">
+      <v-btn
+        class="ma-2" 
+        large
+      >
+        save
+      </v-btn>
+      <v-btn 
+        x-large
+      >
+        process
+      </v-btn>
+      <v-btn 
+        large
+        class="ma-2" 
+      >
+        reset
+      </v-btn>
+    </v-row>
+
+    <v-row justify="center">
+
+      <v-col cols="3">
+        <v-text-field
             :label="fmParams ? fmParams.omega.name : ''"
             :placeholder="fmParams ? fmParams.omega.default.toString() : ''"
             outlined
@@ -51,6 +68,9 @@
             validate-on-blur
             maxlength="5"
         ></v-text-field>    
+      </v-col>
+
+      <v-col cols="3">
         <v-text-field
             :label="fmParams ? fmParams.phase.name : ''"
             :placeholder="fmParams ? fmParams.phase.default.toString() : ''"
@@ -61,6 +81,9 @@
             validate-on-blur
             maxlength="5"
         ></v-text-field> 
+      </v-col>
+
+      <v-col cols="3">
         <v-text-field
             :label="fmParams ? fmParams.lowpass.name : ''"
             :placeholder="fmParams ? fmParams.lowpass.default.toString() : ''"
@@ -71,6 +94,9 @@
             validate-on-blur
             maxlength="5"
         ></v-text-field> 
+      </v-col>
+
+      <v-col cols="3">
         <v-text-field
             :label="fmParams ? fmParams.pquantize.name : ''"
             :placeholder="fmParams ? fmParams.pquantize.default.toString() : ''"
@@ -81,21 +107,29 @@
             validate-on-blur
             maxlength="1"
         ></v-text-field> 
-        <v-btn class="mx-1 mt-1" @click="onRandom">
-          <span>Random</span>
-          <v-icon right dark>autorenew</v-icon>
-        </v-btn>
-        <v-btn class="mx-1 mt-1" @click="onProcess">
-          <span>Process</span>
-          <v-icon right dark>mdi-cloud-upload</v-icon>
-        </v-btn>
-        <v-btn class="mx-1 mt-1" @click="onSave">
-          <span>Save</span>
-          <v-icon right dark>mdi-cloud-download</v-icon>
-        </v-btn>    
       </v-col>
 
     </v-row>
+
+    <v-row>
+      <v-tabs
+        background-color="grey accent-4"
+        class="elevation-2"
+        dark
+        centered
+      >
+        <v-tabs-slider></v-tabs-slider>
+
+        <v-tab
+          v-for="i in 3"
+          :key="i"
+        >
+          Alg {{ i }}
+        </v-tab>
+
+      </v-tabs>
+    </v-row>
+
   </v-container>
 </template>
 
@@ -112,7 +146,7 @@ export default {
 
   data() {
     return {
-      img: image.getRandom(),
+      img: image.getBridgetRiley(),
       url: undefined,
       file: undefined,
       omega: undefined,
@@ -124,12 +158,7 @@ export default {
   },
 
   methods: {
-    onRandom() {
-      this.url = undefined;
-      this.file = undefined;
-      this.img = image.getRandom();
-      this.track('onRandom');
-    },
+
     onProcess() {
       if(this.img) {
         if(this.img.startsWith('data:')) {
@@ -161,14 +190,6 @@ export default {
           }); 
       }
       this.track('onFile');
-    },
-    onUrl(url) {
-      console.log(`onUrl=${this.url}`);
-      if(url && check.checkUrl(url)) {
-        console.log("here");
-        this.img = this.url;
-      }
-      this.track('onUrl');
     },
     onSave() {
       console.log(`onSave=${this.img}`);
