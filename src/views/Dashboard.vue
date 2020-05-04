@@ -18,8 +18,8 @@
 
       <v-img
         :src="img"
-        max-width="300"
-        max-height="500"
+        max-width="320"
+        max-height="300"
         class="grey darken-4"
       >
       </v-img>
@@ -30,7 +30,7 @@
         absolute
         right
       >
-        <v-icon>mdi-plus</v-icon>
+        <v-icon>mdi-file-image-outline</v-icon>
       </v-btn>
 
     </v-row>
