@@ -18,7 +18,7 @@
 
       <v-img
         :src="img"
-        max-width="500"
+        max-width="300"
         max-height="500"
         class="grey darken-4"
       >
@@ -35,10 +35,11 @@
 
     </v-row>
 
-    <v-row justify="center" class="ma-4">
+    <v-row justify="center" no-gutters class="my-2">
+
       <v-btn
         class="ma-2" 
-        large
+        small
       >
         save
       </v-btn>
@@ -48,11 +49,12 @@
         process
       </v-btn>
       <v-btn 
-        large
+        small
         class="ma-2" 
       >
         reset
       </v-btn>
+
     </v-row>
 
     <v-row justify="center">
@@ -111,7 +113,7 @@
 
     </v-row>
 
-    <v-row>
+    <v-row  justify="center" no-gutters>
       <v-tabs
         background-color="grey accent-4"
         class="elevation-2"
