@@ -6,16 +6,18 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
 
     state: {
-        dispimg: undefined
+        origImg: undefined
     },
+
     getters: {
-        displayImage: state => {
-            return state.dispimg
+        origImage: state => {
+            return state.origImg
         }
     },
+    
     mutations: {
-        displayImage: (state, img) => {
-            state.dispimg = img
+        origImage: (state, img) => {
+            state.origImg = img
         }
     }
 })

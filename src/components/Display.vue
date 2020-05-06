@@ -4,18 +4,29 @@
 
             <v-btn
                 icon
+                ref="orig"
+                :disabled="origButton.disabled"
+                :loading="origButton.loading"
+                :input-value="!origButton.disabled"
+                @click="onOrigButton"
             >
                 <v-icon>mdi-record</v-icon>
             </v-btn>
 
             <v-btn
                 icon
+                ref="brim"
+                :disabled="brimButton.disabled"
+                :loading="brimButton.loading"
+                :input-value="!brimButton.disabled"
+                @click="onBrimButton"
             >
                 <v-icon>mdi-record</v-icon>
             </v-btn>
-            </v-row>
 
-            <v-row justify="center">
+        </v-row>
+
+        <v-row justify="center">
 
             <v-img
                 :src="img"
@@ -30,11 +41,15 @@
                 fab
                 absolute
                 right
+                @click="onFileClick"
             >
                 <v-icon>mdi-file-image-outline</v-icon>
             </v-btn>
 
+            <input ref="fupload" type="file" hidden @change="onFileChange" accept="image/*" capture="user" />
+
         </v-row>
+
     </div>
 </template>
 
@@ -48,26 +63,46 @@ export default {
 
     data() {
         return {
-            file: undefined
+            origButton: {
+                disabled: false,
+                loading: false
+            },
+            brimButton: {
+                disabled: true,
+                loading: false
+            }
         }
     },
 
     computed: {
         img() {
-            return this.$store.getters.displayImage
+            return this.$store.getters.origImage
         },
     },
 
     methods: {
-        onFile(files) {
-            if(this.file) {
-                Image.readLocalImage(this.file)
-                .then(image => {
-                    this.img = image;
-                }); 
-            }
-            Track.track('onFile');
+        onFileClick() {
+            this.$refs.fupload.click()
         },
+
+        onFileChange() {
+            const files = this.$refs.fupload.files
+            if(files.length > 0) {
+                Image.readLocalImage(files[0])
+                .then(image => {
+                    this.$store.commit('origImage',image)
+                });
+            }
+            //Track.track('onFile');
+        },
+
+        onOrigButton() {
+            console.log('orig')
+        },
+
+        onBrimButton() {
+            console.log('orig')
+        }
     }
 }
 </script>

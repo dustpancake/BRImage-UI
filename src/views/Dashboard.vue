@@ -25,7 +25,7 @@ export default {
   components: { Display, Triggers, FmInput, AlgSelector },
 
   beforeCreate() {
-    this.$store.commit('displayImage','br.jpg')
+    this.$store.commit('origImage','br.jpg')
   }
 }
 </script>
