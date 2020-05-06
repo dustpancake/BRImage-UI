@@ -20,10 +20,10 @@
                                 {{ p.status }}
                             </div>
                         </v-card-text>
-                            <v-btn small flat color="light-grey mx-2">
+                            <v-btn small text color="light-grey mx-2">
                                 <v-icon small center>cloud_download</v-icon>
                             </v-btn>
-                            <v-btn small flat color="light-grey mx-2">
+                            <v-btn small text color="light-grey mx-2">
                                 <v-icon small center>delete</v-icon>
                             </v-btn>
                         <v-card-actions>
