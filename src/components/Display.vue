@@ -55,7 +55,6 @@
 
 <script>
 /* eslint-disable */
-import Image from '../utils/image';
 import Track from '../utils/track';
 
 export default {
@@ -88,10 +87,7 @@ export default {
         onFileChange() {
             const files = this.$refs.fupload.files
             if(files.length > 0) {
-                Image.readLocalImage(files[0])
-                .then(image => {
-                    this.$store.commit('origImage',image)
-                });
+                this.$store.commit('origFile',files[0])
             }
             //Track.track('onFile');
         },

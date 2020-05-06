@@ -6,11 +6,11 @@
 
         <v-layout row wrap>
 
-            <v-flex xs12 sm6 md6 lg3 v-for="p in photos" :key="p.name">
+            <v-flex xs12 sm6 md6 lg3 v-for="u in urls" :key="u">
                 <v-card class="text-center ma-3">
                     <v-responsive class="pt-4">
                         <v-avatar tile size="260" class="grey lighten-2">
-                            <v-img :src="p.url"></v-img>
+                            <v-img :src="u"></v-img>
                         </v-avatar>
                     </v-responsive>
                     <v-btn icon color="light-grey">
@@ -26,16 +26,10 @@
 
 <script>
 export default {
-    data() {
-        return {
-            photos: [
-                {name: 'Title of the Picture 1', status: 'processed',url:'https://picsum.photos/350/165?random'},
-                {name: 'Title of the Picture 2', status: 'processed',url:'https://picsum.photos/350/165?random'},
-                {name: 'Title of the Picture 3', status: 'processed',url:'https://picsum.photos/350/165?random'},
-                {name: 'Title of the Picture 4', status: 'processed',url:'https://picsum.photos/350/165?random'},
-                {name: 'Title of the Picture 5', status: 'processed',url:'https://picsum.photos/350/165?random'},
-                {name: 'Title of the Picture 6', status: 'processed',url:'https://picsum.photos/350/165?random'}
-            ] 
+
+    computed: {
+        urls() {
+            return this.$store.getters.brimLibrary
         }
     }
 }
