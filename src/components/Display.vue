@@ -45,11 +45,17 @@ import Track from '../utils/track';
 
 export default {
     name: 'Display',
+
     data() {
         return {
-            img: Image.getBridgetRiley(),
             file: undefined
         }
+    },
+
+    computed: {
+        img() {
+            return this.$store.getters.displayImage
+        },
     },
 
     methods: {

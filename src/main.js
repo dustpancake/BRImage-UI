@@ -4,6 +4,7 @@ import router from './router'
 import vuetify from './plugins/vuetify';
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 //import VueGtag from "vue-gtag"
+import Store from './store'
 
 Vue.config.productionTip = false
 
@@ -14,5 +15,6 @@ Vue.config.productionTip = false
 new Vue({
   router,
   vuetify,
-  render: h => h(App)
+  render: h => h(App),
+  store: Store
 }).$mount('#app')
