@@ -22,10 +22,6 @@ import AlgSelector from '../components/AlgSelector'
 
 export default {
   name: 'Dashboard',
-  components: { Display, Triggers, FmInput, AlgSelector },
-
-  beforeCreate() {
-    this.$store.commit('origImage','br.jpg')
-  }
+  components: { Display, Triggers, FmInput, AlgSelector }
 }
 </script>

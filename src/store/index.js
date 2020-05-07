@@ -10,6 +10,9 @@ const store = new Vuex.Store({
         origFile: undefined,
         origImg: undefined,
         brimImg: undefined,
+        dispImg: undefined,
+
+        processing: false,
 
         brimLib: []
     },
@@ -24,9 +27,22 @@ const store = new Vuex.Store({
         brimImage: state => {
             return state.brimImg
         },
+        dispImage: state => {
+            return state.dispImg
+        },
+        isOrigVisible: state => {
+            return state.dispImg == state.origImg
+        },
+        isBrimVisible: state => {
+            return state.dispImg == state.brimImg
+        },
+
+        isProcessing: state => {
+            return state.processing
+        },
 
         brimLibrary: state => {
-            return state.brimLib
+            return state.brimLib.reverse()
         }
     },
 
@@ -35,15 +51,35 @@ const store = new Vuex.Store({
             state.origFile = file
             Image.readLocalImage(file)
             .then(image => {
+                console.log('origFile')
                 state.origImg = image
+                state.dispImg = image
             });
         },
         origImage: (state, img) => {
+            console.log('origImage')
             state.origImg = img
+            state.dispImg = img
         },
         brimImage: (state, img) => {
+            console.log('brimImage')
             state.brimImg = img
             state.brimLib.push(img)
+            state.dispImg = img
+        },
+
+        displayOrig: state => {
+            state.dispImg = state.origImg
+        },
+        displayBrim: state => {
+            state.dispImg = state.brimImg
+        },
+
+        startProcessing: state => {
+            state.processing = true
+        },
+        stopProcessing: state => {
+            state.processing = false
         }
 
     }

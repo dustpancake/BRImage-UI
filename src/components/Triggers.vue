@@ -28,7 +28,7 @@
 <script>
 import Image from '../utils/image';
 import Rest from '../utils/rest';
-import Track from '../utils/track';
+//import Track from '../utils/track';
 import URI from 'urijs';
 
 export default {
@@ -42,6 +42,7 @@ export default {
 
     methods: {
         onProcess() {
+            this.$store.commit('startProcessing')
             const img = this.$store.getters.origImage
             if(img.startsWith('data:')) {
                 Image.compressFile(this.$store.getters.origFile)
@@ -57,7 +58,7 @@ export default {
             }
             else {
                 //this.doPostFm(img);
-                console.log(new URI(img))
+                console.log(img)
             }
             //Track.track('onProcess');
         },
@@ -65,7 +66,7 @@ export default {
         onSave() {
             const url = new URI(this.img);
             window.open(url, "_blank");
-            Track.track('onSave');
+            //Track.track('onSave');
         },
 
         doPostFm(uri) {
@@ -86,6 +87,7 @@ export default {
                 })
                 .catch(err => {
                     console.log(`doPostFm: ${err}`);
+                    this.$store.commit('stopProcessing')
                 });
         },
 
@@ -96,6 +98,7 @@ export default {
                     .then(ret => {
                     console.log(`onProcessRetry: ${ret.len}`);
                     if(ret.len > 0) {
+                        this.$store.commit('stopProcessing')
                         this.$store.commit('brimImage',ret.uri)
                         //this.time(cnt);
                     }
@@ -110,6 +113,7 @@ export default {
                 }, cnt == 1 ? 1200 : 300);
             }
             else {
+                this.$store.commit('stopProcessing')
                 console.log('retryFmUri - giving up');
                 //Track.time(cnt);
             }

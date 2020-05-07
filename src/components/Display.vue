@@ -5,9 +5,6 @@
             <v-btn
                 icon
                 ref="orig"
-                :disabled="origButton.disabled"
-                :loading="origButton.loading"
-                :input-value="!origButton.disabled"
                 @click="onOrigButton"
             >
                 <v-icon>mdi-record</v-icon>
@@ -16,9 +13,8 @@
             <v-btn
                 icon
                 ref="brim"
-                :disabled="brimButton.disabled"
-                :loading="brimButton.loading"
-                :input-value="!brimButton.disabled"
+                :disabled="disableBrim"
+                :loading="isProcessing"
                 @click="onBrimButton"
             >
                 <v-icon>mdi-record</v-icon>
@@ -63,11 +59,9 @@ export default {
     data() {
         return {
             origButton: {
-                disabled: false,
                 loading: false
             },
             brimButton: {
-                disabled: true,
                 loading: false
             }
         }
@@ -75,8 +69,14 @@ export default {
 
     computed: {
         img() {
-            return this.$store.getters.origImage
+            return this.$store.getters.dispImage
         },
+        disableBrim() {
+            return this.$store.getters.brimImage == null
+        },
+        isProcessing() {
+            return this.$store.getters.isProcessing
+        }
     },
 
     methods: {
@@ -93,11 +93,11 @@ export default {
         },
 
         onOrigButton() {
-            console.log('orig')
+            this.$store.commit('displayOrig')
         },
 
         onBrimButton() {
-            console.log('orig')
+            this.$store.commit('displayBrim')
         }
     }
 }
