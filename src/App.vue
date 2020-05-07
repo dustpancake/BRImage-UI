@@ -16,11 +16,6 @@ export default {
 
   data: () => ({
     //
-  }),
-
-  beforeCreate() {
-    console.log('its me')
-    this.$store.commit('origImage','br.jpg')
-  }
+  })
 };
 </script>

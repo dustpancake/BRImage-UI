@@ -4,13 +4,15 @@ import Image from '../utils/image'
 
 Vue.use(Vuex);
 
+const defaultImg = 'br.jpg'
+
 const store = new Vuex.Store({
 
     state: {
         origFile: undefined,
-        origImg: undefined,
+        origImg: defaultImg,
         brimImg: undefined,
-        dispImg: undefined,
+        dispImg: defaultImg,
 
         processing: false,
 
@@ -66,6 +68,13 @@ const store = new Vuex.Store({
             state.brimImg = img
             state.brimLib.push(img)
             state.dispImg = img
+        },
+
+        resetBrim: state => {
+            state.brimImg = undefined
+            state.origFile = undefined
+            state.origImg = defaultImg
+            state.dispImg = state.origImg
         },
 
         displayOrig: state => {

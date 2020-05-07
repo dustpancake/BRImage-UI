@@ -4,6 +4,8 @@
       <v-btn
         class="ma-2" 
         small
+        :disabled="isSaveEnabled"
+        @click="onSave"
       >
         save
       </v-btn>
@@ -18,6 +20,8 @@
       <v-btn 
         small
         class="ma-2" 
+        :disabled="isResetEnabled"
+        @click="onReset"
       >
         reset
       </v-btn>
@@ -34,9 +38,13 @@ import URI from 'urijs';
 export default {
     
     name: 'Triggers',
-    data() {
-        return {
-            img:'TODO'
+
+    computed: {
+        isSaveEnabled() {
+            return this.$store.getters.brimImage == null
+        },
+        isResetEnabled() {
+            return this.$store.getters.brimFile == null
         }
     },
 
@@ -64,9 +72,13 @@ export default {
         },
 
         onSave() {
-            const url = new URI(this.img);
+            const url = new URI(this.$store.getters.brimImage);
             window.open(url, "_blank");
             //Track.track('onSave');
+        },
+
+        onReset() {
+            this.$store.commit('resetBrim')
         },
 
         doPostFm(uri) {
