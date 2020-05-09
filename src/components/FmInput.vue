@@ -60,7 +60,7 @@
 <script>
 import Rest from '../utils/rest';
 import Check from '../utils/check';
-import Track from '../utils/track';
+//import Track from '../utils/track';
 
 export default {
 
@@ -87,28 +87,28 @@ export default {
 
       onOmegaRules(input) {
         if(this.fmParams){
-          Track.track('onOmega');
+          //Track.track('onOmega');
           return Check.checkOmega(input,this.fmParams.omega);
         }
         return true;
       },
       onPhaseRules(input) {
         if(this.fmParams){
-          Track.track('onPhase');
+          //Track.track('onPhase');
           return Check.checkPhase(input,this.fmParams.phase);
         }
         return true;
       },
       onLowpassRules(input) {
         if(this.fmParams){
-          Track.track('onLowpass');
+          //Track.track('onLowpass');
           return Check.checkLowpass(input,this.fmParams.lowpass);
         }
         return true;
       },
       onPquantizeRules(input) {
         if(this.fmParams){
-          Track.track('onPquantize');
+          //Track.track('onPquantize');
           return Check.checkPquantize(input,this.fmParams.pquantize);
         }
         return true;

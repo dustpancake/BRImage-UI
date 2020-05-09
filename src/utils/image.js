@@ -4,6 +4,10 @@ const Compressor = require('compressorjs');
 
 module.exports = {
 
+    isDataImage: (img) => {
+        return img.startsWith('data:')
+    },
+
     readLocalImage: (file) => {
         return new Promise((resolve,reject) => {
             const reader = new FileReader();

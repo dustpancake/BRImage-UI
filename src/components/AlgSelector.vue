@@ -9,10 +9,10 @@
         <v-tabs-slider></v-tabs-slider>
 
         <v-tab
-          v-for="i in 3"
-          :key="i"
+          v-for="a in algs"
+          :key="a"
         >
-          Alg {{ i }}
+          {{ a }}
         </v-tab>
 
       </v-tabs>
@@ -21,6 +21,14 @@
 
 <script>
 export default {
-    name: 'AlgSelector'
+    name: 'AlgSelector',
+
+    data() {
+      return {
+        algs: [
+          'FM'
+        ]
+      }
+    }
 }
 </script>

@@ -87,17 +87,17 @@ export default {
         onFileChange() {
             const files = this.$refs.fupload.files
             if(files.length > 0) {
-                this.$store.commit('origFile',files[0])
+                this.$store.dispatch('setOrigFile',files[0])
             }
             //Track.track('onFile');
         },
 
         onOrigButton() {
-            this.$store.commit('displayOrig')
+            this.$store.dispatch('showOrigImage')
         },
 
         onBrimButton() {
-            this.$store.commit('displayBrim')
+            this.$store.dispatch('showBrimImage')
         }
     }
 }
