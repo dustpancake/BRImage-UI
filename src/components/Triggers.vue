@@ -45,6 +45,7 @@ export default {
 
     methods: {
         onProcess() {
+            this.$store.dispatch('resetInputCols')
             this.$store.dispatch('doFm')
         },
 
@@ -55,6 +56,7 @@ export default {
         },
 
         onReset() {
+            this.$store.dispatch('resetInputCols')
             this.$store.dispatch('resetBrimImage')
         }
     }

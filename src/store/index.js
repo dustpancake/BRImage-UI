@@ -16,6 +16,7 @@ const store = new Vuex.Store({
         dispImg: defaultImg,
 
         processing: false,
+        inputCols: '3',
 
         brimLib: []
     },
@@ -42,6 +43,10 @@ const store = new Vuex.Store({
 
         isProcessing: state => {
             return state.processing
+        },
+
+        inputCols: state => {
+            return state.inputCols
         },
 
         brimLibrary: state => {
@@ -146,6 +151,10 @@ const store = new Vuex.Store({
                 console.log('retryFmUri - giving up');
                 //Track.time(cnt);
             }
+        },
+        
+        resetInputCols: ({commit}) => {
+            commit('inputCols','3')
         }
     },
 
@@ -171,6 +180,10 @@ const store = new Vuex.Store({
         },
         stopProcessing: state => {
             state.processing = false
+        },
+
+        inputCols: (state,cols) => {
+            state.inputCols = cols
         }
 
     }

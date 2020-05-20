@@ -1,7 +1,7 @@
 <template>
     <v-row justify="center">
 
-      <v-col cols="3">
+      <v-col :cols="width">
         <v-text-field
             :label="fmParams ? fmParams.omega.name : ''"
             :placeholder="fmParams ? fmParams.omega.default.toString() : ''"
@@ -11,10 +11,12 @@
             :rules="[onOmegaRules]"
             validate-on-blur
             maxlength="5"
+            dense
+            @click="onInputClick"
         ></v-text-field>    
       </v-col>
 
-      <v-col cols="3">
+      <v-col :cols="width">
         <v-text-field
             :label="fmParams ? fmParams.phase.name : ''"
             :placeholder="fmParams ? fmParams.phase.default.toString() : ''"
@@ -24,10 +26,11 @@
             :rules="[onPhaseRules]"
             validate-on-blur
             maxlength="5"
+            dense
         ></v-text-field> 
       </v-col>
 
-      <v-col cols="3">
+      <v-col :cols="width">
         <v-text-field
             :label="fmParams ? fmParams.lowpass.name : ''"
             :placeholder="fmParams ? fmParams.lowpass.default.toString() : ''"
@@ -37,10 +40,11 @@
             :rules="[onLowpassRules]"
             validate-on-blur
             maxlength="5"
+            dense
         ></v-text-field> 
       </v-col>
 
-      <v-col cols="3">
+      <v-col :cols="width">
         <v-text-field
             :label="fmParams ? fmParams.pquantize.name : ''"
             :placeholder="fmParams ? fmParams.pquantize.default.toString() : ''"
@@ -50,9 +54,9 @@
             :rules="[onPquantizeRules]"
             validate-on-blur
             maxlength="1"
+            dense
         ></v-text-field> 
       </v-col>
-
     </v-row>
 
 </template>
@@ -71,8 +75,14 @@ export default {
         phase: undefined,
         lowpass: undefined,
         pquantize: undefined,
-        fmParams: undefined       
+        fmParams: undefined
       }
+    },
+    
+    computed: {
+        width() {
+            return this.$store.getters.inputCols
+        },
     },
 
     methods: {
@@ -83,6 +93,10 @@ export default {
           lowpass: this.lowpass && Check.checkLowpass(this.lowpass,this.fmParams.lowpass) ? this.lowpass : this.fmParams.lowpass.default.toString(),
           pquantize: this.pquantize && Check.checkPquantize(this.pquantize,this.fmParams.pquantize) ? this.pquantize : this.fmParams.pquantize.default.toString()
         };
+      },
+
+      onInputClick() {
+        this.$store.commit('inputCols','12')
       },
 
       onOmegaRules(input) {
